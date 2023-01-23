@@ -19,4 +19,5 @@ public class Medecin {
     private String email;
     @OneToMany(mappedBy = "medecin")
     private List<RendezVous> rendezVous;
+
 }

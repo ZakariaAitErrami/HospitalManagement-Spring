@@ -2,6 +2,7 @@ package ma.ensab.hospitalmanagement.entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class Patient {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<RendezVous> rendezVous;
 }
