@@ -2,10 +2,7 @@ package ma.ensab.hospitalmanagement.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.ensab.hospitalmanagement.dtos.ConsultationDTO;
-import ma.ensab.hospitalmanagement.dtos.MedecinDTO;
-import ma.ensab.hospitalmanagement.dtos.PatientDTO;
-import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
+import ma.ensab.hospitalmanagement.dtos.*;
 import ma.ensab.hospitalmanagement.entities.Consultation;
 import ma.ensab.hospitalmanagement.entities.Medecin;
 import ma.ensab.hospitalmanagement.entities.Patient;
@@ -19,9 +16,12 @@ import ma.ensab.hospitalmanagement.repositories.ConsultationRepository;
 import ma.ensab.hospitalmanagement.repositories.MedecinRepository;
 import ma.ensab.hospitalmanagement.repositories.PatientRepository;
 import ma.ensab.hospitalmanagement.repositories.RendezVousRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -147,4 +147,18 @@ public class MedicalServiceImp implements MedicalService{
         List<MedecinDTO> medecinDTOs = medecins.stream().map(medecin -> dtoMapper.fromMedecin(medecin)).collect(Collectors.toList());
         return medecinDTOs;
     }
+
+    @Override
+    public PatientPageDTO listPatientspage(int page, int size) {
+        Page<Patient> patients= patientRepository.getAllPatient(PageRequest.of(page, size));
+        PatientPageDTO patientPageDTO = new PatientPageDTO();
+        List<PatientDTO> patientDTOS = patients.getContent().stream().map(patient -> dtoMapper.fromPatient(patient)).collect(Collectors.toList());
+        patientPageDTO.setPatientDTOS(patientDTOS);
+        patientPageDTO.setCurrentPage(page);
+        patientPageDTO.setPageSize(size);
+        patientPageDTO.setTotalPages(patients.getTotalPages());
+        return patientPageDTO;
+    }
+
+
 }

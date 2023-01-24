@@ -3,6 +3,7 @@ package ma.ensab.hospitalmanagement.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.ensab.hospitalmanagement.dtos.PatientDTO;
+import ma.ensab.hospitalmanagement.dtos.PatientPageDTO;
 import ma.ensab.hospitalmanagement.entities.Patient;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
 import ma.ensab.hospitalmanagement.services.MedicalService;
@@ -21,6 +22,15 @@ public class PatientController {
 
         return medicalService.listPatients();
     }
+
+    @GetMapping("/patientspage")
+    public PatientPageDTO patientspage(
+                                      @RequestParam(name="page", defaultValue = "0") int page,
+                                      @RequestParam(name="size", defaultValue = "5")int size){
+
+        return medicalService.listPatientspage(page, size);
+    }
+
     @GetMapping("/patients/{id}")
     public PatientDTO getPatient(@PathVariable(name = "id") Long patientId) throws PatientNotFoundException {
         return medicalService.getPatient(patientId);

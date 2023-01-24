@@ -1,9 +1,6 @@
 package ma.ensab.hospitalmanagement.services;
 
-import ma.ensab.hospitalmanagement.dtos.ConsultationDTO;
-import ma.ensab.hospitalmanagement.dtos.MedecinDTO;
-import ma.ensab.hospitalmanagement.dtos.PatientDTO;
-import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
+import ma.ensab.hospitalmanagement.dtos.*;
 import ma.ensab.hospitalmanagement.entities.Consultation;
 import ma.ensab.hospitalmanagement.entities.Medecin;
 import ma.ensab.hospitalmanagement.entities.Patient;
@@ -34,4 +31,7 @@ public interface MedicalService {
     void deletePatient(Long patientId);
 
     List<MedecinDTO> listMedecin();
+
+
+    PatientPageDTO listPatientspage(int page, int size);
 }
