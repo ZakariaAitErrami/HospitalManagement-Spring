@@ -2,7 +2,10 @@ package ma.ensab.hospitalmanagement.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.ensab.hospitalmanagement.dtos.ConsultationDTO;
+import ma.ensab.hospitalmanagement.dtos.MedecinDTO;
 import ma.ensab.hospitalmanagement.dtos.PatientDTO;
+import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
 import ma.ensab.hospitalmanagement.entities.Consultation;
 import ma.ensab.hospitalmanagement.entities.Medecin;
 import ma.ensab.hospitalmanagement.entities.Patient;
@@ -46,7 +49,7 @@ public class MedicalServiceImp implements MedicalService{
     }
 
     @Override
-    public RendezVous saveRendezVous(Date dateRendezVous, Long idPatient, String nomMedecin) throws PatientNotFoundException {
+    public RendezVousDTO saveRendezVous(Date dateRendezVous, Long idPatient, String nomMedecin) throws PatientNotFoundException {
         Patient p = patientRepository.findById(idPatient).orElse(null);
         if(p==null)
             throw new PatientNotFoundException("Patient not found");
@@ -59,17 +62,19 @@ public class MedicalServiceImp implements MedicalService{
 
         RendezVous savedRdv = rendezVousRepository.save(rdv);
 
-        return savedRdv;
+        return dtoMapper.fromRendezVous(savedRdv);
     }
 
     @Override
-    public Medecin saveMedecin(Medecin medecin) {
-        Medecin m = medecinRepository.save(medecin);
-        return m;
+    public MedecinDTO saveMedecin(MedecinDTO medecinDTO) {
+
+        Medecin m = dtoMapper.fromMedecinDTO(medecinDTO);
+        Medecin savedMedecin = medecinRepository.save(m);
+        return dtoMapper.fromMedecin(savedMedecin);
     }
 
     @Override
-    public Consultation saveConsultation(Long idRdv, double prixConsultation, String rapportConsultation) throws RendezVousNotFoundException {
+    public ConsultationDTO saveConsultation(Long idRdv, double prixConsultation, String rapportConsultation) throws RendezVousNotFoundException {
         RendezVous rdv = rendezVousRepository.findById(idRdv).orElse(null);
         if(rdv==null)
             throw new RendezVousNotFoundException("Rendez vous not found");
@@ -78,7 +83,7 @@ public class MedicalServiceImp implements MedicalService{
         c.setRendezVous(rdv);
         c.setPrixConsultation(prixConsultation);
         Consultation savedConsultation = consultationRepository.save(c);
-        return savedConsultation;
+        return dtoMapper.fromConsultation(savedConsultation);
     }
 
     @Override
@@ -89,25 +94,34 @@ public class MedicalServiceImp implements MedicalService{
     }
 
     @Override
-    public List<RendezVous> listRendezVous() {
+    public List<RendezVousDTO> listRendezVous() {
+        List<RendezVous> rdvs =  rendezVousRepository.findAll();
+        List<RendezVousDTO> rdvDTOS = rdvs.stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        return rdvDTOS;
+    }
+    @Override
+    public List<RendezVous> listRendezVouss(){
         return rendezVousRepository.findAll();
     }
 
+
     @Override
-    public List<RendezVous> rdvsPatient(Long idPatient) throws PatientNotFoundException {
+    public List<RendezVousDTO> rdvsPatient(Long idPatient) throws PatientNotFoundException {
         Patient p = patientRepository.findById(idPatient)
                 .orElseThrow(()-> new PatientNotFoundException("Patient not found!"));
         if(p==null)
             throw new PatientNotFoundException("Patient not found!");
-        return rendezVousRepository.findByPatient(p);
+        List<RendezVous> rdvs = rendezVousRepository.findByPatient(p);
+        List<RendezVousDTO> rdvDTOS = rdvs.stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        return rdvDTOS;
     }
 
     @Override
-    public Medecin searchMedecinByName(String name) throws MedecinNotFoundException {
+    public MedecinDTO searchMedecinByName(String name) throws MedecinNotFoundException {
         Medecin m = medecinRepository.findByNomPr(name);
         if(m==null)
             throw new MedecinNotFoundException("Medecin not found!");
-        return m;
+        return dtoMapper.fromMedecin(m);
     }
     @Override
     public PatientDTO getPatient(Long id) throws PatientNotFoundException {
@@ -125,5 +139,12 @@ public class MedicalServiceImp implements MedicalService{
     @Override
     public void deletePatient(Long patientId){
         patientRepository.deleteById(patientId);
+    }
+
+    @Override
+    public List<MedecinDTO> listMedecin() {
+        List<Medecin> medecins = medecinRepository.findAll();
+        List<MedecinDTO> medecinDTOs = medecins.stream().map(medecin -> dtoMapper.fromMedecin(medecin)).collect(Collectors.toList());
+        return medecinDTOs;
     }
 }

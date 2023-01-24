@@ -1,11 +1,11 @@
 package ma.ensab.hospitalmanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
@@ -19,3 +19,4 @@ public class Consultation {
     private RendezVous rendezVous;
 
 }
+

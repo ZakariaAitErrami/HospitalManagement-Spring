@@ -1,5 +1,6 @@
 package ma.ensab.hospitalmanagement;
 
+import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
 import ma.ensab.hospitalmanagement.entities.Consultation;
 import ma.ensab.hospitalmanagement.entities.Medecin;
 import ma.ensab.hospitalmanagement.entities.Patient;
@@ -30,14 +31,25 @@ public class HospitalManagementApplication {
 		SpringApplication.run(HospitalManagementApplication.class, args);
 	}
 
+
+	/*@Bean
+	CommandLineRunner commandLineRun(RendezVousRepository medicalService){
+		return args -> {
+			List<RendezVous> rdvs = medicalService.findAll();
+			for (RendezVous rdv: rdvs){
+				System.out.println(rdv.getId());
+			}
+		};
+	}*/
+
 	//@Bean
 	CommandLineRunner commandLineRunner(MedicalService medicalService){
 		return args -> {
-			List<RendezVous> rdvs = medicalService.rdvsPatient(6L);
-			for(RendezVous r: rdvs){
+			List<RendezVousDTO> rdvs = medicalService.rdvsPatient(6L);
+			for(RendezVousDTO r: rdvs){
 				System.out.println(r.getId());
 				System.out.println(r.getStatus());
-				System.out.println(r.getMedecin().getNomPr());
+
 				System.out.println("------");
 			}
 
