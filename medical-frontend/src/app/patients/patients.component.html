@@ -9,7 +9,7 @@
                             <div class="input-group">
                                 <label class="input-group-text">Name : </label>
                                 <input type="text" formControlName="keyword" class="form-control">
-                                <button class="btn btn-info">Search</button>
+                                <button class="btn btn-info"><i class="bi bi-search"></i></button>
 
                             </div>
 
@@ -23,6 +23,7 @@
                                 <th>Nom Prenom</th>
                                 <th>Date Naissance</th>
                                 <th>Phone Number</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +33,13 @@
                                 <td>{{p.nomPr}}</td>
                                 <td>{{p.dateNaissance}}</td>
                                 <td>{{p.phoneNumber}}</td>
+                                <td>
+                                    <button (click)="handleDeletePatient(p)" class="btn btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+        
+                                    
+                                </td>
                             </tr>
                             
                             

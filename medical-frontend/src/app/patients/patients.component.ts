@@ -1,4 +1,4 @@
-import { Observable,catchError,throwError } from 'rxjs';
+import { Observable,catchError,throwError, map } from 'rxjs';
 import { PatientService } from './../services/patient.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -51,6 +51,24 @@ export class PatientsComponent implements OnInit {
       })
       )
 
+    }
+
+    handleDeletePatient(p: Patient){
+      this.patientService.deletePatient(p.id).subscribe({
+        next: (resp)=>{
+          //handleSearch()
+          this.patients=this.patients.pipe(
+            map(data => {
+              let index=data.indexOf(p);
+              data.slice(index,1)
+              return data;
+            })
+          );
+        },
+        error: err=>{
+          console.log(err)
+        }
+      })
     }
 
 

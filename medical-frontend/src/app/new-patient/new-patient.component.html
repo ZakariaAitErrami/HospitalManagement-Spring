@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="card col-md-6 offset-3 mt-4">
+        <div class="card-header">Nouveau Patient</div>
+        <div class="card-body">
+            <form [formGroup]="newPatientFormGroup" (ngSubmit)="handleSavePatient()">
+                <!-- {{this.newPatientFormGroup.value | json}} -->
+                <div class="mb-3">
+                    <label class="form-label">Nom et Prénom: </label>
+                    <input type="text" formControlName="nomPr" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date de naissance: </label>
+                    <input type="date" formControlName="dateNaissance" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Télephone: </label>
+                    <input type="text" formControlName="phoneNumber" class="form-control">
+                </div>
+                <button [disabled]="!newPatientFormGroup.valid" class="btn btn-info">Save</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
