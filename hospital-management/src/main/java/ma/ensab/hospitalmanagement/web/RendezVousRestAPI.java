@@ -6,6 +6,7 @@ import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
 import ma.ensab.hospitalmanagement.entities.RendezVous;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
 import ma.ensab.hospitalmanagement.services.MedicalService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class RendezVousRestAPI {
     private MedicalService medicalService;
     public RendezVousRestAPI(MedicalService medicalService){

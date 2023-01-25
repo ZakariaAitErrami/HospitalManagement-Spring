@@ -34,4 +34,6 @@ public interface MedicalService {
 
 
     PatientPageDTO listPatientspage(int page, int size);
+
+    List<PatientDTO> searchPatient(String keyword);
 }

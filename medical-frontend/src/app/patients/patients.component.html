@@ -1,1 +1,60 @@
-<p>patients works!</p>
+<div class="container mt-2">
+    <ng-container *ngIf="patients | async as listPatients; else failure">
+        <div class="card">
+            <div class="card-header">Patients</div>
+                <div class="card-body">
+                    <div *ngIf="searchFormGroup">
+                        <!-- {{this.searchFormGroup.value | json}} -->
+                        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchPatient()">
+                            <div class="input-group">
+                                <label class="input-group-text">Name : </label>
+                                <input type="text" formControlName="keyword" class="form-control">
+                                <button class="btn btn-info">Search</button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom Prenom</th>
+                                <th>Date Naissance</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- subscribe automatic avec async -->
+                            <tr *ngFor="let p of patients | async">
+                                <td>{{p.id}}</td>
+                                <td>{{p.nomPr}}</td>
+                                <td>{{p.dateNaissance}}</td>
+                                <td>{{p.phoneNumber}}</td>
+                            </tr>
+                            
+                            
+    
+                        </tbody>
+    
+                    </table>
+                </div>
+        </div>
+    </ng-container>
+
+    <ng-template #failure>
+        <div class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </ng-template>
+
+    <!-- <div *ngIf="errorMessage">
+        <div class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </div> -->
+
+    
+
+</div>

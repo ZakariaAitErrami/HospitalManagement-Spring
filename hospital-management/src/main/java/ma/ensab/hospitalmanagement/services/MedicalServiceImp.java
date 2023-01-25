@@ -160,5 +160,12 @@ public class MedicalServiceImp implements MedicalService{
         return patientPageDTO;
     }
 
+    @Override
+    public List<PatientDTO> searchPatient(String keyword) {
+        List<Patient> patients = patientRepository.searchPatient(keyword);
+        List<PatientDTO> patientDTOS =  patients.stream().map(pat->dtoMapper.fromPatient(pat)).collect(Collectors.toList());
+        return patientDTOS;
+    }
+
 
 }

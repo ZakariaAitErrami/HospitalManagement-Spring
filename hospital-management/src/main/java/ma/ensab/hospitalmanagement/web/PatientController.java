@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class PatientController {
 
     private MedicalService medicalService;
@@ -21,6 +22,12 @@ public class PatientController {
     public List<PatientDTO> patients(){
 
         return medicalService.listPatients();
+    }
+
+    @GetMapping("/patients/search")
+    public List<PatientDTO> searchPatient(@RequestParam(name="keyword", defaultValue = "") String keyword){
+
+        return medicalService.searchPatient("%"+keyword+"%");
     }
 
     @GetMapping("/patientspage")
