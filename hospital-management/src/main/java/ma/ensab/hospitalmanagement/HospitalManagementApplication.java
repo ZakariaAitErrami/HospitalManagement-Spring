@@ -43,25 +43,25 @@ public class HospitalManagementApplication {
 	}*/
 
 	//@Bean
-	CommandLineRunner commandLineRunner(MedicalService medicalService){
-		return args -> {
-			List<RendezVousDTO> rdvs = medicalService.rdvsPatient(6L);
-			for(RendezVousDTO r: rdvs){
-				System.out.println(r.getId());
-				System.out.println(r.getStatus());
-
-				System.out.println("------");
-			}
-
-			medicalService.listRendezVous().forEach(rdv->{
-
-				try {
-					medicalService.saveConsultation(rdv.getId(), 350.0,"very good!");
-				} catch (RendezVousNotFoundException e) {
-					throw new RuntimeException(e);
-				}
-
-			});
+//	CommandLineRunner commandLineRunner(MedicalService medicalService){
+//		return args -> {
+//			List<RendezVousDTO> rdvs = medicalService.rdvsPatient(6L);
+//			for(RendezVousDTO r: rdvs){
+//				System.out.println(r.getId());
+//				System.out.println(r.getStatus());
+//
+//				System.out.println("------");
+//			}
+//
+//			medicalService.listRendezVous().forEach(rdv->{
+//
+//				try {
+//					medicalService.saveConsultation(rdv.getId(), 350.0,"very good!");
+//				} catch (RendezVousNotFoundException e) {
+//					throw new RuntimeException(e);
+//				}
+//
+//			});
 			/*Stream.of("Karim","Yassine","Ali").forEach(name->{
 				Patient p = new Patient();
 				p.setNomPr(name);
@@ -91,12 +91,12 @@ public class HospitalManagementApplication {
 				}
 			});*/
 
-		};
-	}
+		//};
+//	}
 
 	//@Bean
-	CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository,
-							RendezVousRepository rendezVousRepository,
+	/*CommandLineRunner start(PatientRepository patientRepository, MedecinRepository medecinRepository,*/
+	/*						RendezVousRepository rendezVousRepository,
 							ConsultationRepository consultationRepository){
 		return args -> {
 			Stream.of("Zakaria", "Khaoula", "Badr", "Aicha").forEach(name -> {
@@ -134,5 +134,5 @@ public class HospitalManagementApplication {
 
 			});
 		};
-	}
+	}*/
 }

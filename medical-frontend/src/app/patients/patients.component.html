@@ -1,11 +1,11 @@
 <div class="container mt-2">
-    <ng-container *ngIf="patients | async as listPatients; else failure">
+    <ng-container *ngIf="patientsObservable | async as listPatients; else failure">
         <div class="card">
             <div class="card-header">Patients</div>
                 <div class="card-body">
                     <div *ngIf="searchFormGroup">
                         <!-- {{this.searchFormGroup.value | json}} -->
-                        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchPatient()">
+                        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchPatient()">  <!--(ngSubmit)="handleSearchPatient()"-->
                             <div class="input-group">
                                 <label class="input-group-text">Name : </label>
                                 <input type="text" formControlName="keyword" class="form-control">
@@ -28,11 +28,12 @@
                         </thead>
                         <tbody>
                             <!-- subscribe automatic avec async -->
-                            <tr *ngFor="let p of patients | async">
+                            <tr *ngFor="let p of listPatients.patientDTOS">
                                 <td>{{p.id}}</td>
                                 <td>{{p.nomPr}}</td>
                                 <td>{{p.dateNaissance}}</td>
                                 <td>{{p.phoneNumber}}</td>
+
                                 <td>
                                     <button (click)="handleDeletePatient(p)" class="btn btn-danger">
                                         <i class="bi bi-trash"></i>
@@ -47,6 +48,14 @@
                         </tbody>
     
                     </table>
+                    <ul class="nav nav-pills">
+                        <li *ngFor="let item of [].constructor(listPatients.totalPages); let page=index">
+                            <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="gotoPage(page)" class="btn ms-1 mt-1">{{page+1}}</a>
+
+
+                        </li>
+
+                    </ul>
                 </div>
         </div>
     </ng-container>

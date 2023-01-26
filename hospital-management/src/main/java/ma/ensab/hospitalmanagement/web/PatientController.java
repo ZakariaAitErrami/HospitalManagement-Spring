@@ -7,6 +7,7 @@ import ma.ensab.hospitalmanagement.dtos.PatientPageDTO;
 import ma.ensab.hospitalmanagement.entities.Patient;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
 import ma.ensab.hospitalmanagement.services.MedicalService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +25,12 @@ public class PatientController {
         return medicalService.listPatients();
     }
 
-    @GetMapping("/patients/search")
-    public List<PatientDTO> searchPatient(@RequestParam(name="keyword", defaultValue = "") String keyword){
+    @GetMapping("/patientspage/search")
+    public PatientPageDTO searchPatient(@RequestParam(name="keyword", defaultValue = "") String keyword,
+                                          @RequestParam(name="page", defaultValue = "0") int page,
+                                          @RequestParam(name="size", defaultValue = "5")int size){
 
-        return medicalService.searchPatient("%"+keyword+"%");
+        return medicalService.searchPatientt(keyword,page, size);
     }
 
     @GetMapping("/patientspage")

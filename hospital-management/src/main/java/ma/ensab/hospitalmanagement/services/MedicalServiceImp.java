@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -161,11 +162,22 @@ public class MedicalServiceImp implements MedicalService{
     }
 
     @Override
-    public List<PatientDTO> searchPatient(String keyword) {
-        List<Patient> patients = patientRepository.searchPatient(keyword);
-        List<PatientDTO> patientDTOS =  patients.stream().map(pat->dtoMapper.fromPatient(pat)).collect(Collectors.toList());
-        return patientDTOS;
-    }
+    public PatientPageDTO searchPatientt(String keyword, int page, int size) {
 
+        Page<Patient> patients= patientRepository.findByNomPrContaining(keyword,PageRequest.of(page, size));
+        PatientPageDTO patientPageDTO = new PatientPageDTO();
+        List<PatientDTO> patientDTOS = patients.getContent().stream().map(patient -> dtoMapper.fromPatient(patient)).collect(Collectors.toList());
+       /* List<PatientDTO> newpatientDTOS = new ArrayList<>();
+        for (PatientDTO p: patientDTOS){
+            if(p.getNomPr().contains(keyword))
+                newpatientDTOS.add(p);
+        }*/
+
+        patientPageDTO.setPatientDTOS(patientDTOS);
+        patientPageDTO.setCurrentPage(page);
+        patientPageDTO.setPageSize(size);
+        patientPageDTO.setTotalPages(patients.getTotalPages());
+        return patientPageDTO;
+    }
 
 }

@@ -7,16 +7,37 @@
                 <div class="mb-3">
                     <label class="form-label">Nom et Prénom: </label>
                     <input type="text" formControlName="nomPr" class="form-control">
+                    <span class="text-danger" *ngIf="newPatientFormGroup.controls['nomPr'].touched
+                        && newPatientFormGroup.controls['nomPr'].errors
+                        && newPatientFormGroup.controls['nomPr'].errors!['required']">
+                        Name is Required
+                    </span>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Date de naissance: </label>
                     <input type="date" formControlName="dateNaissance" class="form-control">
+                    <span class="text-danger" *ngIf="newPatientFormGroup.controls['dateNaissance'].touched
+                        && newPatientFormGroup.controls['dateNaissance'].errors
+                        && newPatientFormGroup.controls['dateNaissance'].errors!['required']">
+                        Date de naissance is Required
+                    </span>
                 </div>
+                
 
                 <div class="mb-3">
                     <label class="form-label">Télephone: </label>
                     <input type="text" formControlName="phoneNumber" class="form-control">
+                    <span class="text-danger" *ngIf="newPatientFormGroup.controls['phoneNumber'].touched
+                        && newPatientFormGroup.controls['phoneNumber'].errors
+                        && newPatientFormGroup.controls['phoneNumber'].errors!['required']">
+                        Phone number is Required
+                    </span>
+                    <span class="text-danger" *ngIf="newPatientFormGroup.controls['phoneNumber'].touched
+                        && newPatientFormGroup.controls['phoneNumber'].errors
+                        && newPatientFormGroup.controls['phoneNumber'].errors!['minlength']">
+                        Phone number must contains minimum 10 characters
+                    </span>
                 </div>
                 <button [disabled]="!newPatientFormGroup.valid" class="btn btn-info">Save</button>
             </form>

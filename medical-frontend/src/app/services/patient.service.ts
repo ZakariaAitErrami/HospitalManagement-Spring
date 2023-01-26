@@ -1,4 +1,4 @@
-import { Patient } from './../model/patient.model';
+import { Patient, PatientDetails } from './../model/patient.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs'
@@ -11,12 +11,12 @@ export class PatientService {
   constructor(private http:HttpClient) { }
 
   //get post put return an object of type Observable
-  public getPatients():Observable<Array<Patient>>{
-    return this.http.get<Array<Patient>>("http://localhost:8085/patients") //backendHost=http://localhost:8085/patients
+  public getPatients(page: number, size: number):Observable<PatientDetails>{
+    return this.http.get<PatientDetails>(environment.backendHost+"/patientspage?page="+page+"&size="+size) //backendHost=http://localhost:8085
   }
 
-  public searchPatients(keyword: string): Observable<Array<Patient>>{
-    return this.http.get<Array<Patient>>(environment.backendHost+"/patients/search?keyword="+keyword)
+  public searchPatients(keyword: string,page: number, size: number): Observable<PatientDetails>{
+    return this.http.get<PatientDetails>(environment.backendHost+"/patientspage/search?keyword="+keyword+"&page="+page+"&size"+size)
   }
 
   public savePatient(patient : Patient): Observable<Patient>{

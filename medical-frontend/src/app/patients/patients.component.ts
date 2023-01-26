@@ -1,3 +1,4 @@
+import { PatientDetails } from './../model/patient.model';
 import { Observable,catchError,throwError, map } from 'rxjs';
 import { PatientService } from './../services/patient.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent implements OnInit {
-  patients! : Observable<Array<Patient>>;
+  patientsObservable! : Observable<PatientDetails>;
+  currentPage: number=0;
+  pageSize: number=5;
+
   errorMessage!: string;
   searchFormGroup: FormGroup | undefined;
   constructor(private patientService: PatientService, private fb: FormBuilder){
@@ -23,28 +27,24 @@ export class PatientsComponent implements OnInit {
       this.searchFormGroup=this.fb.group({
         keyword: this.fb.control("")
       })
-      this.patients=this.patientService.getPatients().pipe(
+      this.patientsObservable=this.patientService.getPatients(this.currentPage,this.pageSize).pipe(
         catchError(err => {
           this.errorMessage=err.message;
           return throwError(err);
       })
       )
         
-      // this.patientService.getPatients().subscribe({
-      //   next: (data)=>{
-      //     this.patients=data;
-      //   },
-      //   error: (err)=>{
-      //     this.errorMessage=err.message;
-      //   }
-      // })
       
+    }
+    gotoPage(page: number){
+      this.currentPage=page;
+      this.handleSearchPatient();
     }
 
 
-    handleSearchPatient(){
-      let kw = this.searchFormGroup?.value.keyword;
-      this.patients=this.patientService.searchPatients(kw).pipe(
+     handleSearchPatient(){
+       let kw = this.searchFormGroup?.value.keyword;
+       this.patientsObservable=this.patientService.searchPatients(kw,this.currentPage,this.pageSize).pipe(
         catchError(err => {
           this.errorMessage=err.message;
           return throwError(err);
@@ -53,17 +53,13 @@ export class PatientsComponent implements OnInit {
 
     }
 
+
     handleDeletePatient(p: Patient){
+      let conf = confirm("Are you sure?");
+      if(!conf) return;
       this.patientService.deletePatient(p.id).subscribe({
         next: (resp)=>{
-          //handleSearch()
-          this.patients=this.patients.pipe(
-            map(data => {
-              let index=data.indexOf(p);
-              data.slice(index,1)
-              return data;
-            })
-          );
+          this.handleSearchPatient();
         },
         error: err=>{
           console.log(err)
@@ -74,17 +70,7 @@ export class PatientsComponent implements OnInit {
 
 
 
-  // ngOnInit(): void {
-      // this.http.get("http://localhost:8085/patients").subscribe({
-      //   next: (data)=>{
-      //     this.patients=data;
-      //   },
-      //   error: (err)=>{
-      //     console.log(err);
-      //   }
-      // })
-    
-  // }
+
 
 
   

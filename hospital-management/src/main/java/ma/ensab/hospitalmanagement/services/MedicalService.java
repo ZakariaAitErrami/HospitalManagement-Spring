@@ -8,6 +8,7 @@ import ma.ensab.hospitalmanagement.entities.RendezVous;
 import ma.ensab.hospitalmanagement.exceptions.MedecinNotFoundException;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
 import ma.ensab.hospitalmanagement.exceptions.RendezVousNotFoundException;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 
@@ -35,5 +36,7 @@ public interface MedicalService {
 
     PatientPageDTO listPatientspage(int page, int size);
 
-    List<PatientDTO> searchPatient(String keyword);
+    //List<PatientDTO> searchPatient(String keyword);
+    PatientPageDTO searchPatientt(String keyword,int page, int size);
+
 }
