@@ -19,5 +19,5 @@ public class RendezVousDTO {
     private MedecinDTO medecinDTO;
 
     private PatientDTO patientDTO;
-    //private ConsultationDTO consultationDTO;
+    private ConsultationDTO consultationDTO;
 }

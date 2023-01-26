@@ -39,4 +39,7 @@ public interface MedicalService {
     //List<PatientDTO> searchPatient(String keyword);
     PatientPageDTO searchPatientt(String keyword,int page, int size);
 
+    RendezVousPageDTO listofRendezvous(int page, int size);
+
+    RendezVousPageDTO searchRendezVousPatient(String keyword, int page, int size);
 }

@@ -180,4 +180,37 @@ public class MedicalServiceImp implements MedicalService{
         return patientPageDTO;
     }
 
+    @Override
+    public RendezVousPageDTO listofRendezvous(int page, int size) {
+        /*Page<Patient> patients= patientRepository.getAllPatient(PageRequest.of(page, size));
+        PatientPageDTO patientPageDTO = new PatientPageDTO();
+        List<PatientDTO> patientDTOS = patients.getContent().stream().map(patient -> dtoMapper.fromPatient(patient)).collect(Collectors.toList());
+        patientPageDTO.setPatientDTOS(patientDTOS);
+        patientPageDTO.setCurrentPage(page);
+        patientPageDTO.setPageSize(size);
+        patientPageDTO.setTotalPages(patients.getTotalPages());
+        return patientPageDTO;*/
+
+        Page<RendezVous> rendezVouss = rendezVousRepository.getAllRendezVous(PageRequest.of(page, size));
+        RendezVousPageDTO rendezVousPageDTO = new RendezVousPageDTO();
+        List<RendezVousDTO> rendezVousDTOS = rendezVouss.getContent().stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        rendezVousPageDTO.setRendezVousDTOS(rendezVousDTOS);
+        rendezVousPageDTO.setCurrentPage(page);
+        rendezVousPageDTO.setPageSize(size);
+        rendezVousPageDTO.setTotalPages(rendezVouss.getTotalPages());
+        return rendezVousPageDTO;
+    }
+
+    @Override
+    public RendezVousPageDTO searchRendezVousPatient(String keyword,int page, int size) {
+        Page<RendezVous> rendezVouss = rendezVousRepository.getAllRendezPatient(keyword,PageRequest.of(page, size));
+        RendezVousPageDTO rendezVousPageDTO = new RendezVousPageDTO();
+        List<RendezVousDTO> rendezVousDTOS = rendezVouss.getContent().stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        rendezVousPageDTO.setRendezVousDTOS(rendezVousDTOS);
+        rendezVousPageDTO.setCurrentPage(page);
+        rendezVousPageDTO.setPageSize(size);
+        rendezVousPageDTO.setTotalPages(rendezVouss.getTotalPages());
+        return rendezVousPageDTO;
+    }
+
 }

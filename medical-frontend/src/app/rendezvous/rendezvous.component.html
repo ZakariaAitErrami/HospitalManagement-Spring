@@ -1,1 +1,71 @@
-<p>rendezvous works!</p>
+<div class="container mt-2">
+    <ng-container *ngIf="rendezVousObservable | async as listRendezVous; else failure">
+        <div class="card">
+            <div class="card-header">Liste des Rendez vous</div>
+                <div class="card-body">
+                    <div *ngIf="searchFormGroup">
+                        <!-- {{this.searchFormGroup.value | json}} -->
+                        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchRendezVous()">
+                            <div class="input-group">
+                                <label class="input-group-text">Nom de patient : </label>
+                                <input type="text" formControlName="keyword" class="form-control">
+                                <button class="btn btn-info"><i class="bi bi-search"></i></button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom de patient</th>
+                                <th>Date de rendez vous</th>
+                                <th>Status</th>
+                                <th>Nom Medecin</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- subscribe automatic avec async -->
+                            <tr *ngFor="let p of listRendezVous.rendezVousDTOS">
+                                <td>{{p.id}}</td>
+                                <td>{{p.patientDTO.nomPr}}</td>
+                                <td>{{p.dateRendezVous}}</td>
+                                <td>{{p.status}}</td>
+                                <td>{{"Dr. "+ p.medecinDTO.nomPr}}</td>
+
+                                <!-- <td>
+                                    <button (click)="handleDeletePatient(p)" class="btn btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+        
+                                    
+                                </td> -->
+                            </tr>
+                            
+                            
+    
+                        </tbody>
+    
+                    </table>
+                    <ul class="nav nav-pills">
+                        <li *ngFor="let item of [].constructor(listRendezVous.totalPages); let page=index">
+                            <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="gotoPage(page)" class="btn ms-1 mt-1">{{page+1}}</a>
+
+
+                        </li>
+
+                    </ul>
+                </div>
+        </div>
+    </ng-container>
+
+    <ng-template #failure>
+        <div class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+    </ng-template>
+
+</div>

@@ -63,14 +63,14 @@ public MedecinDTO fromMedecin(Medecin medecin){
     public ConsultationDTO fromConsultation(Consultation consultation){
         ConsultationDTO consultationDTO = new ConsultationDTO();
         BeanUtils.copyProperties(consultation, consultationDTO);
-        consultationDTO.setRendezVousDTO(fromRendezVous(consultation.getRendezVous()));
+        //consultationDTO.setRendezVousDTO(fromRendezVous(consultation.getRendezVous()));
         return consultationDTO;
     }
 
     public Consultation fromConsultationDTO(ConsultationDTO consultationDTO){
         Consultation consultation = new Consultation();
         BeanUtils.copyProperties(consultationDTO, consultation);
-        consultation.setRendezVous(fromRendezVousDTO(consultationDTO.getRendezVousDTO()));
+        //consultation.setRendezVous(fromRendezVousDTO(consultationDTO.getRendezVousDTO()));
         return consultation;
     }
 
@@ -105,7 +105,7 @@ public MedecinDTO fromMedecin(Medecin medecin){
         rendezVousDTO.setStatus(rendezVous.getStatus());
         rendezVousDTO.setMedecinDTO(fromMedecin(rendezVous.getMedecin()));
         rendezVousDTO.setPatientDTO(fromPatient(rendezVous.getPatient()));
-       // rendezVousDTO.setConsultationDTO(fromConsultation(rendezVous.getConsultation()));
+        rendezVousDTO.setConsultationDTO(fromConsultation(rendezVous.getConsultation()));
         return rendezVousDTO;
     }
 
@@ -116,7 +116,7 @@ public MedecinDTO fromMedecin(Medecin medecin){
         rendezVous.setStatus(rendezVousDTO.getStatus());
         rendezVous.setMedecin(fromMedecinDTO(rendezVousDTO.getMedecinDTO()));
         rendezVous.setPatient(fromPatientDTO(rendezVousDTO.getPatientDTO()));
-       // rendezVous.setConsultation(fromConsultationDTO(rendezVousDTO.getConsultationDTO()));
+        rendezVous.setConsultation(fromConsultationDTO(rendezVousDTO.getConsultationDTO()));
         return rendezVous;
     }
 
