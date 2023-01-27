@@ -18,4 +18,9 @@ export class RendezvousService {
   public getRendezVousPatientByName(keyword: string,page: number, size: number):Observable<RendezVousDetails>{
     return this.http.get<RendezVousDetails>(environment.backendHost+"/rendezvous/search?keyword="+keyword+"&page="+page+"&size="+size);
   }
+  //http://localhost:8085/rendezvous/patient/1?page=2&size=2
+  public getRendezVousPatientById(idpatient: number,page: number, size: number):Observable<RendezVousDetails>{
+    return this.http.get<RendezVousDetails>(environment.backendHost+"/rendezvous/patient/"+idpatient+"?page="+page+"&size="+size);
+  }
+
 }

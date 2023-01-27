@@ -9,6 +9,7 @@ import { RendezvousComponent } from './rendezvous/rendezvous.component';
 import {HttpClientModule} from "@angular/common/http";
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewPatientComponent } from './new-patient/new-patient.component';
+import { RendezvousPatientComponent } from './rendezvous-patient/rendezvous-patient.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NewPatientComponent } from './new-patient/new-patient.component';
     NavbarComponent,
     PatientsComponent,
     RendezvousComponent,
-    NewPatientComponent
+    NewPatientComponent,
+    RendezvousPatientComponent
   ],
   imports: [
     BrowserModule,

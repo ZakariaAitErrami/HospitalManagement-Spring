@@ -22,4 +22,7 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
 
     @Query("from RendezVous v where v.patient.nomPr like %:kw%")
     Page<RendezVous> getAllRendezPatient(@Param(value = "kw") String nom,Pageable pageable);
+
+    @Query("from RendezVous v where v.patient.id =:kw")
+    Page<RendezVous> getAllRendezPatientId(@Param(value = "kw") Long id,Pageable pageable);
 }

@@ -22,7 +22,7 @@ public interface MedicalService {
 
     List<RendezVous> listRendezVouss();
 
-    List<RendezVousDTO> rdvsPatient(Long idPatient) throws PatientNotFoundException;
+
     MedecinDTO searchMedecinByName(String name) throws MedecinNotFoundException;
 
     PatientDTO getPatient(Long id) throws PatientNotFoundException;
@@ -42,4 +42,9 @@ public interface MedicalService {
     RendezVousPageDTO listofRendezvous(int page, int size);
 
     RendezVousPageDTO searchRendezVousPatient(String keyword, int page, int size);
+
+    List<RendezVousDTO> rdvsPatient(Long idPatient) throws PatientNotFoundException;
+    RendezVousPageDTO rdvPatient(Long idPatient, int page, int size) throws PatientNotFoundException;
+
+    RendezVousDTO saveRendezVous(RendezVousDTO rendezVousDTO);
 }

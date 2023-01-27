@@ -1,3 +1,4 @@
+import { RendezvousPatientComponent } from './rendezvous-patient/rendezvous-patient.component';
 import { NewPatientComponent } from './new-patient/new-patient.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -8,7 +9,7 @@ const routes: Routes = [
   {path: "patients", component: PatientsComponent},
   {path: "rendezvous", component: RendezvousComponent},
   {path: "new-patient", component: NewPatientComponent},
-
+  {path: "rendezvouspatient/:id", component: RendezvousPatientComponent}
 ];
 
 @NgModule({

@@ -117,6 +117,7 @@ public class MedicalServiceImp implements MedicalService{
         return rdvDTOS;
     }
 
+
     @Override
     public MedecinDTO searchMedecinByName(String name) throws MedecinNotFoundException {
         Medecin m = medecinRepository.findByNomPr(name);
@@ -212,5 +213,26 @@ public class MedicalServiceImp implements MedicalService{
         rendezVousPageDTO.setTotalPages(rendezVouss.getTotalPages());
         return rendezVousPageDTO;
     }
+
+    @Override
+    public RendezVousPageDTO rdvPatient(Long idPatient, int page, int size) {
+        Page<RendezVous> rendezVouss = rendezVousRepository.getAllRendezPatientId(idPatient,PageRequest.of(page, size));
+        RendezVousPageDTO rendezVousPageDTO = new RendezVousPageDTO();
+        List<RendezVousDTO> rendezVousDTOS = rendezVouss.getContent().stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        rendezVousPageDTO.setRendezVousDTOS(rendezVousDTOS);
+        rendezVousPageDTO.setCurrentPage(page);
+        rendezVousPageDTO.setPageSize(size);
+        rendezVousPageDTO.setTotalPages(rendezVouss.getTotalPages());
+        return rendezVousPageDTO;
+    }
+
+    @Override
+    public RendezVousDTO saveRendezVous(RendezVousDTO rendezVousDTO) {
+        RendezVous rdv = dtoMapper.fromRendezVousDTO(rendezVousDTO);
+        RendezVous savedRdv = rendezVousRepository.save(rdv);
+        return dtoMapper.fromRendezVous(savedRdv);
+
+    }
+
 
 }

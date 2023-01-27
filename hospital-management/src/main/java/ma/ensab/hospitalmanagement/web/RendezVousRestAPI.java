@@ -1,10 +1,7 @@
 package ma.ensab.hospitalmanagement.web;
 
 import lombok.AllArgsConstructor;
-import ma.ensab.hospitalmanagement.dtos.MedecinDTO;
-import ma.ensab.hospitalmanagement.dtos.PatientPageDTO;
-import ma.ensab.hospitalmanagement.dtos.RendezVousDTO;
-import ma.ensab.hospitalmanagement.dtos.RendezVousPageDTO;
+import ma.ensab.hospitalmanagement.dtos.*;
 import ma.ensab.hospitalmanagement.entities.RendezVous;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
 import ma.ensab.hospitalmanagement.services.MedicalService;
@@ -21,7 +18,7 @@ public class RendezVousRestAPI {
     }
 
 
-    @GetMapping("/rendezvous/patient/{idPatient}")
+    @GetMapping("/rendezvouss/patient/{idPatient}")
     public List<RendezVousDTO> getRendezVousPatient(@PathVariable Long idPatient) throws PatientNotFoundException {
         return medicalService.rdvsPatient(idPatient);
     }
@@ -46,7 +43,18 @@ public class RendezVousRestAPI {
     }
 
 
+    @GetMapping("/rendezvous/patient/{idPatient}")
+    public RendezVousPageDTO getRendezVousPatientId(@PathVariable Long idPatient,
+                                                    @RequestParam(name="page", defaultValue = "0") int page,
+                                                    @RequestParam(name="size", defaultValue = "5")int size) throws PatientNotFoundException {
+        return medicalService.rdvPatient(idPatient, page, size);
+    }
 
+    @PostMapping("/saverdv")
+    public RendezVousDTO saveRendezVous(@RequestBody RendezVousDTO rendezVousDTO){
+        return medicalService.saveRendezVous(rendezVousDTO);
+
+    }
 
 
 }

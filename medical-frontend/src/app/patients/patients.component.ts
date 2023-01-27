@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Patient } from '../model/patient.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class PatientsComponent implements OnInit {
 
   errorMessage!: string;
   searchFormGroup: FormGroup | undefined;
-  constructor(private patientService: PatientService, private fb: FormBuilder){
+  constructor(private patientService: PatientService, private fb: FormBuilder,private router: Router){
 
   }
 
@@ -62,9 +63,14 @@ export class PatientsComponent implements OnInit {
           this.handleSearchPatient();
         },
         error: err=>{
-          console.log(err)
+          this.errorMessage=err;
         }
       })
+    }
+
+    handleRdvPatientid(p: Patient){
+      this.router.navigateByUrl("/rendezvouspatient/"+p.id,{state:p});
+      //this.router.navigateByUrl("/rendezvouspatient/"+p.id, {state:p});
     }
 
 

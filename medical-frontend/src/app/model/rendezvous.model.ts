@@ -15,7 +15,7 @@ export interface RendezVous {
     status:          string;
     medecinDTO:      Medecin;
     patientDTO:      Patient;
-    consultationDTO: Consultation;
+    //consultationDTO: Consultation;
 }
 
 

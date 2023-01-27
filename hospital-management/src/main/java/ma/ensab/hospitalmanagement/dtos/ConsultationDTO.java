@@ -16,6 +16,6 @@ public class ConsultationDTO {
     private String rapportConsultation;
     private double prixConsultation;
 
-    //private RendezVousDTO rendezVousDTO;
+    private RendezVousDTO rendezVousDTO;
 
 }

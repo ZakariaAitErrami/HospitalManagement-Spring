@@ -1,0 +1,72 @@
+<div class="container mt-2">
+    <div class="row">
+        <div class="col col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Les rendez-vous de {{patient.nomPr}}
+                </div>
+                
+                <ng-container *ngIf="rdvObservable | async as rdvDetails">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Nom Medecin</th>
+                                <th>Specialite</th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let op of rdvDetails.rendezVousDTOS">
+                                <td>{{op.id}}</td>
+                                <td>{{op.dateRendezVous}}</td>
+                                <td>{{op.status}}</td>
+                                <td>{{op.medecinDTO.nomPr}}</td>
+                                <td>{{op.medecinDTO.specialite}}</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <ul class="nav nav-pills">
+                        <li *ngFor="let item of [].constructor(rdvDetails.totalPages); let page=index">
+                            <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="gotoPage(page)" class="btn ms-1 mt-1 mb-2">{{page+1}}</a>
+                        </li>
+
+                    </ul>
+
+                </ng-container>
+            </div>
+        </div>
+
+
+        <div class="col col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Ajouter un rendez-vous pour {{patient.nomPr}}
+                </div>
+                <div class="card-body">
+                    <form method="post" [formGroup]="rdvFormGroup" (ngSubmit)="handleSaveRdv()">
+                        <div class="mb-3">
+                            <label class="form-label">Date de rendez-vous</label>
+                            <input type="date" formControlName="dateRendezVous" class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nom de Medecin</label>
+                            <input type="text" formControlName="nomMedecin" class="form-control"/>
+                        </div>
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-success">Save Rendez-Vous</button>
+                          </div>
+                    </form>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+    
+
+</div>
