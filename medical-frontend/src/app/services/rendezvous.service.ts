@@ -1,3 +1,4 @@
+import { RendezVous } from './../model/rendezvous.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,5 +23,10 @@ export class RendezvousService {
   public getRendezVousPatientById(idpatient: number,page: number, size: number):Observable<RendezVousDetails>{
     return this.http.get<RendezVousDetails>(environment.backendHost+"/rendezvous/patient/"+idpatient+"?page="+page+"&size="+size);
   }
+
+   public saveRdv(rendezvous : RendezVous): Observable<RendezVous>{
+     return this.http.post<RendezVous>(environment.backendHost+"/saverdv",rendezvous)
+
+   }
 
 }

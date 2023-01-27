@@ -14,7 +14,7 @@ export class MedecinService {
   public getMedecinByName(name: string):Observable<Medecin>{
     return this.http.get<Medecin>(environment.backendHost+"/medecin/search?name="+name); //backendHost=http://localhost:8085
   }
-  public getAllMedecin():Observable<Medecin>{
-    return this.http.get<Medecin>(environment.backendHost+"/medecin");
+  public getAllMedecin():Observable<Array<Medecin>>{
+    return this.http.get<Array<Medecin>>(environment.backendHost+"/medecin");
   }
 }

@@ -49,17 +49,24 @@
                 </div>
                 <div class="card-body">
                     <form method="post" [formGroup]="rdvFormGroup" (ngSubmit)="handleSaveRdv()">
+                         <!-- {{rdvFormGroup.value | json}}  -->
                         <div class="mb-3">
                             <label class="form-label">Date de rendez-vous</label>
                             <input type="date" formControlName="dateRendezVous" class="form-control"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nom de Medecin</label>
-                            <input type="text" formControlName="nomMedecin" class="form-control"/>
+                            <select class="form-select mt-3" formControlName="nomMedecin" *ngIf="medecinsObservable |async as listmedecin">
+                                <option *ngFor="let m of listmedecin" value="{{m.nomPr}}">
+                                    {{m.nomPr}}
+                                </option>
+                              </select> 
                         </div>
                         <div class="d-grid mb-3">
                             <button class="btn btn-success">Save Rendez-Vous</button>
                           </div>
+
+                           
                     </form>
                 </div>
                 
@@ -67,6 +74,4 @@
             </div>
         </div>
     </div>
-    
-
 </div>
