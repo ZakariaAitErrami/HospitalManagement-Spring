@@ -219,6 +219,12 @@ public class MedicalServiceImp implements MedicalService{
         Page<RendezVous> rendezVouss = rendezVousRepository.getAllRendezPatientId(idPatient,PageRequest.of(page, size));
         RendezVousPageDTO rendezVousPageDTO = new RendezVousPageDTO();
         List<RendezVousDTO> rendezVousDTOS = rendezVouss.getContent().stream().map(rdv -> dtoMapper.fromRendezVous(rdv)).collect(Collectors.toList());
+        for (RendezVousDTO r: rendezVousDTOS){
+            Consultation c = consultationRepository.getConsultationByIdRdv(r.getId());
+            if(c!=null)
+                r.setHasConsultation(true);
+            else r.setHasConsultation(false);
+        }
         rendezVousPageDTO.setRendezVousDTOS(rendezVousDTOS);
         rendezVousPageDTO.setCurrentPage(page);
         rendezVousPageDTO.setPageSize(size);
@@ -230,8 +236,17 @@ public class MedicalServiceImp implements MedicalService{
     public RendezVousDTO saveRendezVous(RendezVousDTO rendezVousDTO) {
         RendezVous rdv = dtoMapper.fromRendezVousDTO(rendezVousDTO);
         RendezVous savedRdv = rendezVousRepository.save(rdv);
-        return dtoMapper.fromRendezVous(savedRdv);
+        RendezVousDTO rdto = dtoMapper.fromRendezVous(savedRdv);
+        rdto.setHasConsultation(false);
+        //return dtoMapper.fromRendezVous(savedRdv);
+        return rdto;
+    }
 
+    @Override
+    public ConsultationDTO getConsultationByIdRendezVous(Long idRendezVous) {
+        Consultation c = consultationRepository.getConsultationByIdRdv(idRendezVous);
+        if(c==null) return null;
+        return dtoMapper.fromConsultation(c);
     }
 
 

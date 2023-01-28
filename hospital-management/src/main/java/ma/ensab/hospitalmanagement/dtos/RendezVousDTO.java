@@ -19,5 +19,6 @@ public class RendezVousDTO {
     private MedecinDTO medecinDTO;
 
     private PatientDTO patientDTO;
+    private boolean hasConsultation;
     //private ConsultationDTO consultationDTO;
 }

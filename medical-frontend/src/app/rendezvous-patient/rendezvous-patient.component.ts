@@ -1,13 +1,14 @@
+import { Consultation } from './../model/Consultation.model';
 import { MedecinService } from './../services/medecin.service';
 import { Medecin } from './../model/Medecin.model';
 import { RendezVous, RendezVousDetails } from './../model/rendezvous.model';
-import { Observable, throwError, catchError, async } from 'rxjs';
+import { Observable, throwError, catchError, async, map } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Patient } from './../model/patient.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RendezvousService } from '../services/rendezvous.service';
-
+import { isEmpty } from 'rxjs/operators';
 @Component({
   selector: 'app-rendezvous-patient',
   templateUrl: './rendezvous-patient.component.html',
@@ -17,8 +18,12 @@ export class RendezvousPatientComponent implements OnInit{
   patientId!: number;
   patient!: Patient;
   medecinObservable!: Observable<Medecin>;
+  consultationObservable!: Observable<Consultation>;
+  consultation!: Consultation;
+
   medecin!: Medecin;
   rdv!: RendezVous;
+  length: number=0;
   rdvFormGroup!: FormGroup;
   currentPage: number=0;
   pageSize: number=3;
@@ -39,6 +44,7 @@ export class RendezvousPatientComponent implements OnInit{
     this.getRendezVousPatient();
 
     this.medecinsObservable = this.medecinService.getAllMedecin();
+
 
   }
 
@@ -65,5 +71,20 @@ export class RendezvousPatientComponent implements OnInit{
 },);
   });
   }
-  
+
+  getConsultation(idRdv: number): Observable<Consultation> {
+     this.consultationObservable = this.rendezVousService.getConsultation(idRdv);
+      return this.consultationObservable;
+  }
+
+  seeConsultation(){
+
+  }
+
+  addConsultation(){
+
+  }
+
+
+
 }

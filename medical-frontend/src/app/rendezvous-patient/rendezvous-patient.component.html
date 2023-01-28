@@ -16,6 +16,7 @@
                                 <th>Status</th>
                                 <th>Nom Medecin</th>
                                 <th>Specialite</th>
+                                <th>Consultation</th>
                             </tr>
                             
                         </thead>
@@ -26,6 +27,12 @@
                                 <td>{{op.status}}</td>
                                 <td>{{op.medecinDTO.nomPr}}</td>
                                 <td>{{op.medecinDTO.specialite}}</td>
+                                
+                                <td>
+                                    <button *ngIf="op.hasConsultation" type="button" (click)="seeConsultation()" class="btn btn-success">See </button>
+                                    <button *ngIf="!op.hasConsultation" type="button" (click)="addConsultation()" class="btn btn-success">Add </button>
+                                </td>
+                                
                             </tr>
                         </tbody>
                         

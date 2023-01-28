@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { RendezVousDetails } from '../model/rendezvous.model';
+import { Consultation } from '../model/Consultation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class RendezvousService {
    public saveRdv(rendezvous : RendezVous): Observable<RendezVous>{
      return this.http.post<RendezVous>(environment.backendHost+"/saverdv",rendezvous)
 
+   }
+
+   public getConsultation(idRdv: number): Observable<Consultation>{
+    return this.http.get<Consultation>(environment.backendHost+"/consultation/"+idRdv)
    }
 
 }

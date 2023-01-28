@@ -47,4 +47,6 @@ public interface MedicalService {
     RendezVousPageDTO rdvPatient(Long idPatient, int page, int size) throws PatientNotFoundException;
 
     RendezVousDTO saveRendezVous(RendezVousDTO rendezVousDTO);
+
+    ConsultationDTO getConsultationByIdRendezVous(Long idRendezVous);
 }

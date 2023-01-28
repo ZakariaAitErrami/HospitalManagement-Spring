@@ -2,9 +2,12 @@ package ma.ensab.hospitalmanagement.web;
 
 import lombok.AllArgsConstructor;
 import ma.ensab.hospitalmanagement.dtos.*;
+import ma.ensab.hospitalmanagement.entities.Consultation;
 import ma.ensab.hospitalmanagement.entities.RendezVous;
 import ma.ensab.hospitalmanagement.exceptions.PatientNotFoundException;
+import ma.ensab.hospitalmanagement.repositories.ConsultationRepository;
 import ma.ensab.hospitalmanagement.services.MedicalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,5 +59,9 @@ public class RendezVousRestAPI {
 
     }
 
+    @GetMapping("/consultation/{idRdv}")
+    public ConsultationDTO getConsultationIdRdv(@PathVariable Long idRdv){
+        return medicalService.getConsultationByIdRendezVous(idRdv);
+    }
 
 }
