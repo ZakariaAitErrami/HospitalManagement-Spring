@@ -51,4 +51,6 @@ public interface MedicalService {
     ConsultationDTO getConsultationByIdRendezVous(Long idRendezVous);
 
     ConsultationDTO saveConsultation(ConsultationDTO consultationDTO);
+
+    RendezVousDTO getRendezVousById(Long id);
 }

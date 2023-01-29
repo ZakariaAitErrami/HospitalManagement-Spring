@@ -40,4 +40,8 @@ export class RendezvousService {
     return this.http.post<Consultation>(environment.backendHost+"/saveconsultation", consultation)
    }
 
+   public getRdvById(idrdv: number): Observable<RendezVous>{
+    return this.http.get<RendezVous>(environment.backendHost+"/rendezvous/"+idrdv)
+   }
+
 }

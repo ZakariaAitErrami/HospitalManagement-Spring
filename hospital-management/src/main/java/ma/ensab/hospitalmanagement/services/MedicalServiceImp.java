@@ -256,5 +256,11 @@ public class MedicalServiceImp implements MedicalService{
         return dtoMapper.fromConsultation(savedConsultation);
     }
 
+    @Override
+    public RendezVousDTO getRendezVousById(Long id) {
+        RendezVous rdv = rendezVousRepository.findById(id).orElse(null);
+        return dtoMapper.fromRendezVous(rdv);
+    }
+
 
 }

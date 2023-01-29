@@ -69,5 +69,9 @@ public class RendezVousRestAPI {
         return medicalService.saveConsultation(consultationDTO);
     }
 
+    @GetMapping("/rendezvous/{idRdv}")
+    public RendezVousDTO getRdv(@PathVariable Long idRdv){
+        return medicalService.getRendezVousById(idRdv);
+    }
 
 }

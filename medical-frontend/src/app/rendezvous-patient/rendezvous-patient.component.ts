@@ -23,6 +23,7 @@ export class RendezvousPatientComponent implements OnInit{
   patient!: Patient;
   medecinObservable!: Observable<Medecin>;
   consultationObservable!: Observable<Consultation>;
+  rendezvousObservable!: Observable<RendezVous>;
 
   medecin!: Medecin;
   rdv!: RendezVous;
@@ -92,40 +93,27 @@ export class RendezvousPatientComponent implements OnInit{
   }
 
   addConsultation(): void {
-    this.prixConsultation=this.consultFormGroup.get('prixConsultation')?.value;
-    this.rapportConsultation=this.consultFormGroup.get('rapportConsultation')?.value;
 
-    let p:Patientclass= new Patientclass(this.idp,this.nomP, this.dateNaiss, this.phone);
-    let m: Medecinclass= new Medecinclass(this.idm, this.nomM, this.specialite,this.email);
-    let r: RendezVousclass=new RendezVousclass(this.id, this.daterdv,this.statusrdv,
-      this.hasconsultation,m,p);
-    
-    let c:Consultation=this.consultFormGroup.value;
-    console.log(c.prixConsultation)
-    console.log(c.rapportConsultation)
-    c.rendezVousDTO.id=this.id;
-    c.rendezVousDTO.dateRendezVous=this.daterdv;
-    c.rendezVousDTO.status=this.statusrdv;
-    c.rendezVousDTO.hasConsultation=this.hasconsultation;
-    
-    c.rendezVousDTO.patientDTO.id=this.idp;
-    c.rendezVousDTO.patientDTO.nomPr=this.nomP;
-    c.rendezVousDTO.patientDTO.dateNaissance=this.dateNaiss;
-    console.log(c.rendezVousDTO.patientDTO.dateNaissance)
-    c.rendezVousDTO.patientDTO.phoneNumber=this.phone;
-    
-    c.rendezVousDTO.medecinDTO.id=this.idm;
-    c.rendezVousDTO.medecinDTO.nomPr=this.nomM;
-    c.rendezVousDTO.medecinDTO.specialite=this.specialite;
-    c.rendezVousDTO.medecinDTO.email=this.email;
+    this.rendezVousService.getRdvById(this.id).subscribe({
+      next: (r: RendezVous)=>{
 
-    //post of cons
+        let c: Consultation=this.consultFormGroup.value;
+        c.rendezVousDTO=r;
+        //save
+        this.rendezVousService.saveConsultation(c).subscribe(cc=>{
+          alert("Consultation added!");
+          this.consultFormGroup.reset();
+          this.getRendezVousPatient();
+        })
 
-    this.rendezVousService.saveConsultation(c).subscribe(cc=>{
-      alert("Rendez-vous added!");
-      this.consultFormGroup.reset();
-      this.getRendezVousPatient();
-    })
+
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    }
+
+    )
 
   }
 
