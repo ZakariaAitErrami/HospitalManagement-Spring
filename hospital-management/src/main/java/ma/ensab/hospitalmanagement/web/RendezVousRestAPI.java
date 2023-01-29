@@ -64,4 +64,10 @@ public class RendezVousRestAPI {
         return medicalService.getConsultationByIdRendezVous(idRdv);
     }
 
+    @PostMapping("/saveconsultation")
+    public ConsultationDTO saveConsultaion(@RequestBody ConsultationDTO consultationDTO){
+        return medicalService.saveConsultation(consultationDTO);
+    }
+
+
 }

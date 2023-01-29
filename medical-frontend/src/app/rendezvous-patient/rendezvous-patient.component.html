@@ -29,8 +29,8 @@
                                 <td>{{op.medecinDTO.specialite}}</td>
                                 
                                 <td>
-                                    <button *ngIf="op.hasConsultation" type="button" (click)="seeConsultation()" class="btn btn-success">See </button>
-                                    <button *ngIf="!op.hasConsultation" type="button" (click)="addConsultation()" class="btn btn-success">Add </button>
+                                    <button id="btnsee" *ngIf="op.hasConsultation" type="button" (click)="onOpenModal(op,'see')" class="btn btn-success">See </button>
+                                    <button (click)="onOpenModal(op,'add')"  *ngIf="!op.hasConsultation" type="button" class="btn btn-success">Add </button>
                                 </td>
                                 
                             </tr>
@@ -82,3 +82,70 @@
         </div>
     </div>
 </div>
+
+
+
+<!--Consultation-->
+<div class="modal fade" id="addConsultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Consultation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="consultFormGroup" method="post" (ngSubmit)="addConsultation()">
+            <!-- {{consultFormGroup.value | json}} -->
+          <div class="mb-3">
+            <label for="rapport-consultation" class="col-form-label">Rapport Consultation:</label>
+            <textarea formControlName="rapportConsultation" class="form-control" id="rapport-consultation"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="consultation-prix" class="col-form-label">Prix de consultation:</label>
+            <input type="number" class="form-control" formControlName="prixConsultation" id="consultation-prix">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add consultation</button>
+            </div>
+            
+        </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- See consultaion info -->
+<div class="modal fade" id="seeconsultation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Infos consultation</h3>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ng-container *ngIf="consultationObservable | async as consult">
+          <h5>Rapport consultation: </h5>
+          <p>{{consult.rapportConsultation}}</p>
+          <hr>
+          <h5>Prix Consultation: </h5>
+          <p>{{consult.prixConsultation}} MAD</p>
+          </ng-container>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="main-container"></div>
+
+
+

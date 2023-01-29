@@ -249,5 +249,12 @@ public class MedicalServiceImp implements MedicalService{
         return dtoMapper.fromConsultation(c);
     }
 
+    @Override
+    public ConsultationDTO saveConsultation(ConsultationDTO consultationDTO) {
+        Consultation c = dtoMapper.fromConsultationDTO(consultationDTO);
+        Consultation savedConsultation = consultationRepository.save(c);
+        return dtoMapper.fromConsultation(savedConsultation);
+    }
+
 
 }

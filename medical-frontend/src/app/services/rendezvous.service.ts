@@ -1,10 +1,12 @@
+import { Consultation } from './../model/Consultation.model';
 import { RendezVous } from './../model/rendezvous.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { RendezVousDetails } from '../model/rendezvous.model';
-import { Consultation } from '../model/Consultation.model';
+import { Consultationclass } from '../model/classes.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,10 @@ export class RendezvousService {
 
    public getConsultation(idRdv: number): Observable<Consultation>{
     return this.http.get<Consultation>(environment.backendHost+"/consultation/"+idRdv)
+   }
+
+   public saveConsultation(consultation:Consultation): Observable<Consultation>{
+    return this.http.post<Consultation>(environment.backendHost+"/saveconsultation", consultation)
    }
 
 }
